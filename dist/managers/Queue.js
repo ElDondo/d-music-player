@@ -170,8 +170,9 @@ class Queue {
      * @param {PlayOptions} [options=DefaultPlayOptions]
      * @returns {Promise<Song>}
      */
-    play(search, options = __1.DefaultPlayOptions) {
+    play(search, cookies, options = __1.DefaultPlayOptions) {
         var _a;
+        const COOKIE = cookies;
         return __awaiter(this, void 0, void 0, function* () {
             if (this.destroyed)
                 throw new __1.DMPError(__1.DMPErrors.QUEUE_DESTROYED);
@@ -209,9 +210,9 @@ class Queue {
             song = this.songs[0];
             if (song.seekTime)
                 options.seek = song.seekTime;
-            let requestOptions = this.player.options.ytdlCookie ? {
+            let requestOptions = COOKIE ? {
                 headers: {
-                    cookie: this.player.options.ytdlCookie
+                    cookie: COOKIE
                 }
             } : {};
             let stream = discord_ytdl_core_1.default(song.url, {
