@@ -17,6 +17,7 @@ const StreamConnection_1 = require("../voice/StreamConnection");
 const voice_1 = require("@discordjs/voice");
 const discord_ytdl_core_1 = __importDefault(require("discord-ytdl-core"));
 const __1 = require("..");
+var COOKIE;
 class Queue {
     /**
      * Queue constructor
@@ -148,16 +149,16 @@ class Queue {
                         this.songs.unshift(oldSong);
                         this.songs[0]._setFirst(false);
                         this.player.emit('songChanged', this, this.songs[0], oldSong);
-                        return this.play(this.songs[0], { immediate: true });
+                        return this.play(this.songs[0], COOKIE, { immediate: true });
                     }
                     else if (this.repeatMode === __1.RepeatMode.QUEUE) {
                         this.songs.push(oldSong);
                         this.songs[this.songs.length - 1]._setFirst(false);
                         this.player.emit('songChanged', this, this.songs[0], oldSong);
-                        return this.play(this.songs[0], { immediate: true });
+                        return this.play(this.songs[0], COOKIE, { immediate: true });
                     }
                     this.player.emit('songChanged', this, this.songs[0], oldSong);
-                    return this.play(this.songs[0], { immediate: true });
+                    return this.play(this.songs[0], COOKIE, { immediate: true });
                 }
             }))
                 .on('error', (err) => this.player.emit('error', this, err.message));
@@ -172,7 +173,7 @@ class Queue {
      */
     play(search, cookies, options = __1.DefaultPlayOptions) {
         var _a;
-        const COOKIE = cookies;
+        COOKIE = cookies;
         return __awaiter(this, void 0, void 0, function* () {
             if (this.destroyed)
                 throw new __1.DMPError(__1.DMPErrors.QUEUE_DESTROYED);
@@ -265,7 +266,7 @@ class Queue {
             this.player.emit('playlistAdd', this, playlist);
             if (songLength === 0) {
                 playlist.songs[0]._setFirst();
-                yield this.play(playlist.songs[0], { immediate: true });
+                yield this.play(playlist.songs[0], COOKIE, { immediate: true });
             }
             return playlist;
         });
@@ -287,7 +288,7 @@ class Queue {
                 time = 0;
             if (time >= this.nowPlaying.millisecons)
                 return this.skip();
-            yield this.play(this.nowPlaying, {
+            yield this.play(this.nowPlaying, COOKIE, {
                 immediate: true,
                 seek: time
             });
