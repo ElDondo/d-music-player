@@ -222,8 +222,9 @@ class Queue {
                 seek: (options === null || options === void 0 ? void 0 : options.seek) ? options.seek / 1000 : 0,
                 fmt: 's16le',
                 encoderArgs: [],
+                filter: 'audioonly',
                 quality: quality.toLowerCase() === 'low' ? 'lowestaudio' : 'highestaudio',
-                highWaterMark: 1 << 25
+                highWaterMark: 26
             })
                 .on('error', (error) => {
                 if (!error.message.toLowerCase().includes("premature close"))
