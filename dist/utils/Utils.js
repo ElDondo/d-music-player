@@ -129,21 +129,22 @@ class Utils {
                 }
             }
             else if (YouTubeLink) {
+                //console.log("Youtube link found!");
                 let VideoID = this.parseVideo(Search);
                 if (!VideoID)
                     throw __1.DMPErrors.SEARCH_NULL;
-                YouTube.options.httpOptions.localAddress = SOptions.localAddress;
-                let VideoResult = yield YouTube.getVideo(VideoID);
-                if (!VideoResult)
-                    throw __1.DMPErrors.SEARCH_NULL;
+                //YouTube.options.httpOptions.localAddress = SOptions.localAddress;
+                //let VideoResult = yield YouTube.getVideo(VideoID);
+                //if (!VideoResult)
+                //    throw __1.DMPErrors.SEARCH_NULL;
                 let VideoTimecode = this.parseVideoTimecode(Search);
                 return new __1.Song({
-                    name: VideoResult.title,
+                    //name: VideoResult.title,
                     url: Search,
-                    duration: this.msToTime(((_a = VideoResult.duration) !== null && _a !== void 0 ? _a : 0) * 1000),
-                    author: VideoResult.channel.name,
-                    isLive: VideoResult.isLiveContent,
-                    thumbnail: VideoResult.thumbnails.best,
+                    //duration: this.msToTime(((_a = VideoResult.duration) !== null && _a !== void 0 ? _a : 0) * 1000),
+                    //author: VideoResult.channel.name,
+                    //isLive: VideoResult.isLiveContent,
+                    //thumbnail: VideoResult.thumbnails.best,
                     seekTime: SOptions.timecode && VideoTimecode ? Number(VideoTimecode) * 1000 : null,
                 }, Queue, SOptions.requestedBy);
             }
