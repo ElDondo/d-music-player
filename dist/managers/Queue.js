@@ -18,7 +18,6 @@ const voice_1 = require("@discordjs/voice");
 const discord_ytdl_core_1 = __importDefault(require("discord-ytdl-core"));
 const __1 = require("..");
 var COOKIE;
-var timer;
 class Queue {
     /**
      * Queue constructor
@@ -141,7 +140,7 @@ class Queue {
                     if (this.options.leaveOnEnd)
                         setTimeout(() => {
                             if (!this.isPlaying)
-                                this.destroy(false);
+                                this.destroy();
                         }, this.options.timeout);
                     return;
                 }
@@ -173,10 +172,8 @@ class Queue {
      * @returns {Promise<Song>}
      */
     play(search, cookies, options = __1.DefaultPlayOptions) {
-        //console.log("Start play function. Search is: " + search);
         var _a;
         COOKIE = cookies;
-        clearTimeout(timer);
         return __awaiter(this, void 0, void 0, function* () {
             if (this.destroyed)
                 throw new __1.DMPError(__1.DMPErrors.QUEUE_DESTROYED);
@@ -189,7 +186,6 @@ class Queue {
                 .catch(error => {
                 throw new __1.DMPError(error);
             });
-            //console.log(song.url);
             if (!options.immediate)
                 song.data = data;
             let songLength = this.songs.length;
@@ -318,7 +314,7 @@ class Queue {
     stop() {
         if (this.destroyed)
             throw new __1.DMPError(__1.DMPErrors.QUEUE_DESTROYED);
-        return this.destroy(false);
+        return this.destroy();
     }
     /**
      * Shuffles the Queue
@@ -445,9 +441,6 @@ class Queue {
         this.destroyed = true;
         if (this.connection)
             this.connection.stop();
-        timer = setTimeout(() => {
-            (_a = this.connection) === null || _a === void 0 ? void 0 : _a.leave();
-        }, 300000);
         if (leaveOnStop)
             (_a = this.connection) === null || _a === void 0 ? void 0 : _a.leave();
         this.player.deleteQueue(this.guild.id);
