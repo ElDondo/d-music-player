@@ -224,7 +224,7 @@ class Queue {
                 encoderArgs: [],
                 filter: 'audioonly',
                 quality: quality.toLowerCase() === 'low' ? 'lowestaudio' : 'highestaudio',
-                highWaterMark: 26
+                highWaterMark: 1 >> 26
             })
                 .on('error', (error) => {
                 if (!error.message.toLowerCase().includes("premature close"))
