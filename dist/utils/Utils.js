@@ -132,7 +132,7 @@ class Utils {
                 let VideoID = this.parseVideo(Search);
                 if (!VideoID)
                     throw __1.DMPErrors.SEARCH_NULL;
-                YouTube.options.httpOptions.localAddress = SOptions.localAddress;
+                //YouTube.options.httpOptions.localAddress = SOptions.localAddress;
                 let VideoResult = yield YouTube.getVideo(VideoID);
                 if (!VideoResult)
                     throw __1.DMPErrors.SEARCH_NULL;
